@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Agent</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1 id="agent-title">Voice Agent</h1>
+      <div class="header-right">
+        <span id="connection-status" class="status-badge disconnected">Disconnected</span>
+        <button id="settings-btn" class="settings-btn" aria-label="Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Config Panel -->
+    <div id="config-overlay" class="config-overlay" hidden></div>
+    <aside id="config-panel" class="config-panel">
+      <div class="config-header">
+        <h2>Settings</h2>
+        <button id="config-close" class="config-close" aria-label="Close settings">&times;</button>
+      </div>
+
+      <div class="config-body">
+        <div class="config-field">
+          <label for="config-preset">Preset</label>
+          <select id="config-preset">
+            <option value="default">Default</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label for="config-name">Agent Name</label>
+          <input type="text" id="config-name" value="Voice Assistant" placeholder="Agent name">
+        </div>
+
+        <div class="config-field">
+          <label for="config-prompt">System Prompt</label>
+          <textarea id="config-prompt" rows="8" placeholder="Define the agent's personality and behaviour..."></textarea>
+        </div>
+
+        <div class="config-field">
+          <label for="config-voice">Voice</label>
+          <select id="config-voice">
+            <option value="21m00Tcm4TlvDq8ikWAM">Rachel</option>
+            <option value="TxGEqnHWrfWFTfGW9XjX">Josh</option>
+            <option value="EXAVITQu4vr4xnSDxMaL">Bella</option>
+            <option value="ErXwobaYiN019PkySvjV">Antoni</option>
+            <option value="MF3mGyEYCl7XYWbV9V6O">Elli</option>
+            <option value="custom">Custom Voice ID...</option>
+          </select>
+          <input type="text" id="config-voice-custom" class="config-voice-custom" placeholder="Enter ElevenLabs voice ID" hidden>
+        </div>
+
+        <div class="config-field">
+          <label for="config-max-tokens">Max Response Length: <span id="config-max-tokens-val">300</span> tokens</label>
+          <input type="range" id="config-max-tokens" min="50" max="1000" step="10" value="300">
+        </div>
+
+        <button id="config-save" class="config-save-btn">Save &amp; Apply</button>
+      </div>
+    </aside>
+
+    <main>
+      <div id="conversation" class="conversation-area">
+        <!-- Conversation messages appended here -->
+      </div>
+
+      <div id="current-transcript" class="transcript-live"></div>
+
+      <div id="status-indicator" class="status idle">
+        <span id="status-text">Ready</span>
+        <div class="waveform" hidden>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="mic-button" class="mic-btn" aria-label="Hold to talk">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="1" width="6" height="11" rx="3"></rect>
+            <path d="M19 10v1a7 7 0 0 1-14 0v-1"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span>Click to Start</span>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

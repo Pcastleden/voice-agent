@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:developers.deepgram.com)",
+      "WebFetch(domain:elevenlabs.io)",
+      "WebFetch(domain:github.com)",
+      "Bash(git init)",
+      "Bash(git config --global user.name)",
+      "Bash(git config --global user.email)",
+      "Bash(winget install GitHub.cli --accept-source-agreements --accept-package-agreements)",
+      "Bash(export PATH=\"$PATH:/c/Program Files/GitHub CLI\")",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" auth status)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\")",
+      "Bash(gh repo create Pcastleden/voice-agent --public --source=. --remote=origin --description \"Real-time browser voice agent: Deepgram STT → Claude → ElevenLabs TTS\")"
+    ]
+  }
+}
