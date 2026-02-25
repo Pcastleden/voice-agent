@@ -13,6 +13,7 @@ function createTTSStream(session, setState) {
 
     ttsWs.on("open", () => {
       isOpen = true;
+      console.log(`[Session ${session.id}] ElevenLabs WebSocket connected (voice: ${voiceId})`);
 
       // Send BOS (Beginning of Stream) message with API key
       ttsWs.send(
@@ -76,8 +77,16 @@ function createTTSStream(session, setState) {
       try {
         const message = JSON.parse(data.toString());
 
+        // Log all non-audio messages for debugging
+        if (!message.audio) {
+          console.log(`[Session ${session.id}] ElevenLabs msg:`, JSON.stringify(message).slice(0, 200));
+        }
+
         if (message.audio) {
           audioChunkCount++;
+          if (audioChunkCount === 1) {
+            console.log(`[Session ${session.id}] First audio chunk received`);
+          }
           // Forward audio to client
           if (session.ws.readyState === 1) {
             session.ws.send(
