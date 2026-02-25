@@ -384,7 +384,7 @@ const DEFAULT_CONFIG = {
   agentName: "Voice Assistant",
   systemPrompt:
     "You are a helpful voice assistant. Keep responses concise and conversational — typically 1-3 sentences unless the user asks for detail. Never use markdown, bullet points, or formatting in your responses since they will be spoken aloud.",
-  voiceId: "21m00Tcm4TlvDq8ikWAM",
+  voiceId: "aura-2-luna-en",
   maxTokens: 300,
 };
 

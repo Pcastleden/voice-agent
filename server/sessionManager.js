@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const deepgramSTT = require("./deepgramSTT");
 const claudeAgent = require("./claudeAgent");
-const elevenLabsTTS = require("./elevenLabsTTS");
+const deepgramTTS = require("./deepgramTTS");
 const { SentenceBuffer } = require("./sentenceBuffer");
 
 const sessions = new Map();
@@ -19,7 +19,7 @@ function createSession(ws) {
     config: {
       systemPrompt:
         "You are a helpful voice assistant. Keep responses concise and conversational — typically 1-3 sentences unless the user asks for detail. Never use markdown, bullet points, or formatting in your responses since they will be spoken aloud.",
-      voiceId: process.env.ELEVENLABS_VOICE_ID || "21m00Tcm4TlvDq8ikWAM",
+      voiceId: process.env.DEEPGRAM_VOICE_MODEL || "aura-2-luna-en",
       model: "claude-sonnet-4-6",
       maxTokens: 300,
       agentName: "Voice Assistant",
@@ -39,7 +39,7 @@ function createSession(ws) {
     // Create TTS stream for this turn
     let ttsStream = null;
     try {
-      ttsStream = await elevenLabsTTS.createTTSStream(session, setState);
+      ttsStream = await deepgramTTS.createTTSStream(session, setState);
       session.currentTTSStream = ttsStream;
     } catch (err) {
       console.error(`[Session ${session.id}] TTS init failed, text-only fallback:`, err.message);
