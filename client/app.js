@@ -208,6 +208,9 @@ function initPlaybackContext() {
   if (!playbackContext || playbackContext.state === "closed") {
     playbackContext = new AudioContext();
   }
+  if (playbackContext.state === "suspended") {
+    playbackContext.resume();
+  }
 }
 
 function queueAudioForPlayback(base64Audio) {
@@ -356,6 +359,9 @@ async function toggleMic(e) {
       return;
     }
   }
+
+  // Pre-warm playback context during user gesture so autoplay policy allows it
+  initPlaybackContext();
 
   startStreaming();
   micBtn.querySelector("span").textContent = "Listening...";
