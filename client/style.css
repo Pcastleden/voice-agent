@@ -267,6 +267,7 @@ main {
   gap: 10px;
 }
 
+.reset-btn,
 .settings-btn {
   background: none;
   border: none;
@@ -280,6 +281,7 @@ main {
   transition: color 0.2s, background 0.2s;
 }
 
+.reset-btn:hover,
 .settings-btn:hover {
   color: var(--text-primary);
   background: var(--bg-surface);

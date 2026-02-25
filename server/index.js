@@ -40,6 +40,12 @@ wss.on("connection", (ws, req) => {
           sessionManager.interrupt(session);
           break;
 
+        case "reset":
+          sessionManager.interrupt(session);
+          session.conversationHistory = [];
+          console.log(`[Session ${session.id}] Conversation reset`);
+          break;
+
         case "config":
           if (message.systemPrompt) session.config.systemPrompt = message.systemPrompt;
           if (message.voiceId) session.config.voiceId = message.voiceId;

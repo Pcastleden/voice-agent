@@ -24,6 +24,7 @@ const statusIndicator = document.getElementById("status-indicator");
 const statusText = document.getElementById("status-text");
 const waveformEl = statusIndicator.querySelector(".waveform");
 const connectionBadge = document.getElementById("connection-status");
+const resetBtn = document.getElementById("reset-btn");
 
 // ─── WebSocket ───────────────────────────────────────────────────────────────
 function connectWebSocket() {
@@ -368,6 +369,34 @@ async function toggleMic(e) {
 }
 
 micBtn.addEventListener("click", toggleMic);
+
+// ─── Reset Conversation ─────────────────────────────────────────────────────
+resetBtn.addEventListener("click", () => {
+  // Stop mic if active
+  if (isMicActive) {
+    stopStreaming();
+    micBtn.querySelector("span").textContent = "Click to Start";
+    micBtn.classList.remove("listening");
+  }
+
+  // Stop any playback
+  if (isPlaying) {
+    stopPlayback();
+  }
+
+  // Clear conversation UI
+  conversationEl.innerHTML = "";
+  transcriptEl.textContent = "";
+  currentAgentText = "";
+  finalizeAgentMessage();
+
+  // Tell server to reset
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ type: "reset" }));
+  }
+
+  updateUIState("idle");
+});
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
 function arrayBufferToBase64(buffer) {
